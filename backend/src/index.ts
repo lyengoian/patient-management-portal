@@ -67,11 +67,11 @@ app.post('/api/patients', async (req, res) => {
 
     // Insert additional fields
     for (const field of additional_fields) {
-      const { fieldName, fieldType, fieldValue } = field;
+      const { fieldName, fieldValue } = field;
       // Check if the field already exists
       let fieldIdResult = await pool.query(
         'SELECT id FROM additional_fields WHERE field_name = $1 AND field_type = $2',
-        [fieldName, fieldType]
+        [fieldName]
       );
 
       let fieldId;
@@ -81,7 +81,7 @@ app.post('/api/patients', async (req, res) => {
         // Insert new field definition
         fieldIdResult = await pool.query(
           'INSERT INTO additional_fields (field_name, field_type) VALUES ($1, $2) RETURNING id',
-          [fieldName, fieldType]
+          [fieldName]
         );
         fieldId = fieldIdResult.rows[0].id;
       }
@@ -156,7 +156,7 @@ app.put('/api/patients/:id', async (req, res) => {
         } else {
           const newField = await pool.query(
             `INSERT INTO additional_fields (field_name, field_type) VALUES ($1, $2) RETURNING id`,
-            [field.fieldName, field.fieldType]
+            [field.fieldName]
           );
           fieldId = newField.rows[0].id;
         }
@@ -267,7 +267,6 @@ app.get('/api/patients', async (req, res) => {
   
       const additionalFields = additionalFieldsResult.rows.map(row => ({
         fieldName: row.field_name,
-        fieldType: row.field_type,
         fieldValue: row.field_value,
       }));
   

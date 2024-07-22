@@ -1,24 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, User } from 'firebase/auth';
-import { initializeApp } from 'firebase/app';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, User } from 'firebase/auth';
 import PasswordResetForm from './PasswordResetForm';
 import { Button, TextField, Typography, Box, Alert, IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import FinniHealthLogo from './logo.svg';
-
-// Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyCVzHT-wd52vNGKepTvtXZh3D1NaAkcHXo",
-  authDomain: "finni-health-680d5.firebaseapp.com",
-  projectId: "finni-health-680d5",
-  storageBucket: "finni-health-680d5.appspot.com",
-  messagingSenderId: "594601014445",
-  appId: "1:594601014445:web:23344dfad5833876f18224",
-  measurementId: "G-X1JGZHDH32"
-};
-
-initializeApp(firebaseConfig);
-const auth = getAuth();
+import FinniHealthLogo from '../../lib/assets/logo.svg';
+import { auth } from '../../firebaseConfig';
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -26,7 +12,7 @@ const LoginForm: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showAlert, setShowAlert] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const [, setUser] = useState<User | null>(null);
   const [isResettingPassword, setIsResettingPassword] = useState(false);
 
   const handleFirebaseError = (error: any) => {
@@ -58,7 +44,6 @@ const LoginForm: React.FC = () => {
       }
     });
 
-    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
 
@@ -70,23 +55,19 @@ const LoginForm: React.FC = () => {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log('User created:', user);
         })
         .catch((error) => {
           handleFirebaseError(error);
           setShowAlert(true);
-          console.error('Error creating user:', error);
         });
     } else {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log('User signed in:', user);
         })
         .catch((error) => {
           handleFirebaseError(error);
           setShowAlert(true);
-          console.error('Error signing in:', error);
         });
     }
   };
@@ -105,7 +86,7 @@ const LoginForm: React.FC = () => {
       backgroundColor: '#F0EADF',
       padding: '2rem'
     }}>
-      <Box sx={{marginBottom:'30px'}}><img src={FinniHealthLogo} alt="Finni Health Logo" /></Box>
+      <Box sx={{ marginBottom: '30px' }}><img src={FinniHealthLogo} alt="Finni Health Logo" /></Box>
       {showAlert && <Alert sx={{ marginBottom: 1, width: 'fit-content' }} severity="error" action={
         <IconButton
           aria-label="close"
