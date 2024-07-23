@@ -26,7 +26,7 @@ const AlertMessage: React.FC = () => {
     if (openError) setOpenError(false);
   };
 
-  if (!open || !message || !openError || !statusError) return null;
+  if ((!open || !message) && !openError && !statusError) return null;
 
   return (
     <Alert

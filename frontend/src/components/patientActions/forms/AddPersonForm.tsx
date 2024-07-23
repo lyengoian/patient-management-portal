@@ -32,9 +32,9 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
   const [addresses, setAddresses] = useState<Address[]>([
     { addressLine1: "", addressLine2: "", city: "", state: "", zipCode: "" },
   ]);
-  const [additionalFields, setAdditionalFields] = useState<AdditionalField[]>([
-    { fieldName: "", fieldValue: "" },
-  ]);
+  const [additionalFields, setAdditionalFields] = useState<AdditionalField[]>(
+    []
+  );
 
   const handleFieldChange = (
     index: number,
@@ -166,8 +166,23 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
         </Grid>
         {addresses.map((address, index) => (
           <React.Fragment key={index}>
-            <Grid item xs={12}>
-              <Typography variant="h6">{`Address ${index + 1}`}</Typography>
+            <Grid
+              item
+              xs={12}
+              container
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Grid item>
+                <Typography variant="h6">{`Address ${index + 1}`}</Typography>
+              </Grid>
+              {addresses.length > 1 && (
+                <Grid item>
+                  <IconButton onClick={() => handleRemoveAddress(index)}>
+                    <RemoveCircleIcon />
+                  </IconButton>
+                </Grid>
+              )}
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -244,6 +259,9 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
             Add Another Address
           </Button>
         </Grid>
+        <Grid item>
+          <Typography variant="h6">Additional Fields</Typography>
+        </Grid>
         {additionalFields.map((field, index) => (
           <Grid container spacing={2} marginLeft={0} marginTop={1} key={index}>
             <Grid item xs={12} sm={5}>
@@ -276,7 +294,7 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12} sm={1}>
+            <Grid item xs={12}>
               <IconButton onClick={() => handleRemoveField(index)}>
                 <RemoveCircleIcon />
               </IconButton>

@@ -217,8 +217,23 @@ const EditPersonForm: React.FC<Props> = ({
         </Grid>
         {addresses.map((address, index) => (
           <React.Fragment key={index}>
-            <Grid item xs={12}>
-              <Typography variant="h6">{`Address ${index + 1}`}</Typography>
+            <Grid
+              item
+              xs={12}
+              container
+              alignItems="center"
+              justifyContent="space-between"
+            >
+              <Grid item>
+                <Typography variant="h6">{`Address ${index + 1}`}</Typography>
+              </Grid>
+              {addresses.length > 1 && (
+                <Grid item>
+                  <IconButton onClick={() => handleRemoveAddress(index)}>
+                    <RemoveCircleIcon />
+                  </IconButton>
+                </Grid>
+              )}
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
@@ -281,17 +296,15 @@ const EditPersonForm: React.FC<Props> = ({
                 fullWidth
               />
             </Grid>
-            <Grid item xs={12}>
-              <IconButton onClick={() => handleRemoveAddress(index)}>
-                <RemoveCircleIcon />
-              </IconButton>
-            </Grid>
           </React.Fragment>
         ))}
         <Grid item xs={12}>
           <Button onClick={handleAddAddress} startIcon={<AddCircleIcon />}>
             Add Another Address
           </Button>
+        </Grid>
+        <Grid item>
+          <Typography variant="h6">Additional Fields</Typography>
         </Grid>
         {additionalFields.map((field, index) => (
           <Grid container spacing={2} marginLeft={0} marginTop={1} key={index}>
