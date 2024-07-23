@@ -59,7 +59,8 @@ This project is a web application built with a React Frontend with Material UI c
 <img width="1501" alt="image" src="https://github.com/user-attachments/assets/57d66377-ec31-4f50-8c06-a3a2eb5fa807">
 
 ### Adding a Patient
-4. From the patient management portal, simply click on the <> icon. A drawer will open, and a form will be presented to enter details about the new patient. Fill out all of the required information, then submit. Once the form is submitted, the drawer will close and the new patient will appear in the portal.
+4. From the patient management portal, simply click on the <img width="38" alt="image" src="https://github.com/user-attachments/assets/4298fb3b-96a2-4ba4-8742-8edece10658f">
+ icon. A drawer will open, and a form will be presented to enter details about the new patient. Fill out all of the required information, then submit. Once the form is submitted, the drawer will close and the new patient will appear in the portal.
     **NOTE** that the user will need to fill out all required information for the form to submit. Additional fields and addresses can be added and removed as needed. At least one address is required for each patient.
 #### Empty Add Patient Form
 <img width="1508" alt="image" src="https://github.com/user-attachments/assets/779ec6a2-5ca2-465b-bef9-b1beb4696c8d">
@@ -68,7 +69,8 @@ This project is a web application built with a React Frontend with Material UI c
 <img width="1501" alt="image" src="https://github.com/user-attachments/assets/b52c097e-4695-439e-9cdb-367ba4f83aba">
 
 ### Editing a Patient
-5. From the patient management portal, simply click on the <> icon. A drawer will open, and a form will be presented to enter updated information about the existing patient. All form fields will be pre-filled with any existing information. Fill out all of the required information as needed, then submit. Once the form is submitted, the drawer will close and the updated patient will appear in the portal.
+5. From the patient management portal, simply click on the <img width="38" alt="image" src="https://github.com/user-attachments/assets/650e83b0-098b-422d-b604-1f20d069c36b">
+ icon. A drawer will open, and a form will be presented to enter updated information about the existing patient. All form fields will be pre-filled with any existing information. Fill out all of the required information as needed, then submit. Once the form is submitted, the drawer will close and the updated patient will appear in the portal.
     **NOTE** that the user will need to fill out all required information for the form to submit. Any fields that were not updated will be submitted as-is. Additional fields and addresses can be added and removed as needed. At least one address is required for each patient.
 #### Edit Patient Form with Pre-Filled Information
 <img width="1505" alt="image" src="https://github.com/user-attachments/assets/69b7126e-1034-46bc-81be-788b16f1f181">
@@ -83,7 +85,8 @@ This project is a web application built with a React Frontend with Material UI c
 <img width="1501" alt="image" src="https://github.com/user-attachments/assets/72768f4d-5b47-4496-82fb-2c303db7e31a">
 
 ### Deleting a Patient
-7. From the patient management portal, simply click on the <> icon. A dialog will open, asking to confirm the deletion action. Click on `Yes, Delete.` to delete the patient. Once the patient is successfully deleted, the dialog will close, and the patient will no longe appear in the portal.
+7. From the patient management portal, simply click on the <img width="38" alt="image" src="https://github.com/user-attachments/assets/174bc5b1-a29a-4a7c-8cce-2ba2542e49ce">
+ icon. A dialog will open, asking to confirm the deletion action. Click on `Yes, Delete.` to delete the patient. Once the patient is successfully deleted, the dialog will close, and the patient will no longe appear in the portal.
 #### Delete Patient Confirmation Dialog
 <img width="1501" alt="image" src="https://github.com/user-attachments/assets/16ffebfd-8d01-4926-98f8-d1512efca7b4">
 
