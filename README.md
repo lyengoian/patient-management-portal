@@ -1,7 +1,6 @@
-# Demo Patient Management Portal
+# Patient Management Portal
 
-## A Containerized Patient Management Portal with 
-This project is a simple web application build with a React Frontend with Material UI components, and Express Backend with a PostgreSQL database, containerized with Docker. The application allows a user to sign up, log in, log out, and reset their password. Upon login, the user enters a patient management portal, where they will see a list of their current patients, as well as have the ability to add, edit, and remove any patients. Additionally, the user will be able to search for patients in the list. The user will be presented various error messages if any conflicts arise, such as trying to sign up with incorrect credentials, trying to sign up with duplicate emails, any errors from adding/removing/editing patients, and more.
+This project is a simple web application built with a React Frontend with Material UI components, and Express Backend with a PostgreSQL database, containerized with Docker. The application allows a user to sign up, log in, log out, and reset their password before managing their patients. Upon login, the user enters a patient management portal, where they will see a list of their current patients, as well as have the ability to add, edit, and remove any patients. Additionally, the user will be able to search for patients from the list. The user will be presented various error messages if any conflicts arise, such as trying to sign up with incorrect credentials or any errors from adding/removing/editing patients, and more.
 
 ## Built With / Technologies Used
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
@@ -42,6 +41,10 @@ This project is a simple web application build with a React Frontend with Materi
 
 #### Password Reset Email Successfully Sent
 <img width="1501" alt="image" src="https://github.com/user-attachments/assets/e5dc68ee-2dc4-47cf-8d90-206b50651c5f">
+
+#### Password Reset Email
+<img width="1177" alt="image" src="https://github.com/user-attachments/assets/51bd97e0-f100-4d84-a7cb-8fc5329ff930">
+<img width="436" alt="image" src="https://github.com/user-attachments/assets/e8ff2736-a753-4550-94a3-d11a850eab7a">
 
 ### Logging Out
 3. From the patient management portal, simply click on the `Logout` button. You will then be redirected back to the landing page.
@@ -118,13 +121,10 @@ Once Docker compose finishes running, you will see the following in the console:
 ```
 frontend-1  | Compiled successfully!
 frontend-1  | 
-frontend-1  | You can now view my-react-app in the browser.
+frontend-1  | You can now view finni-health in the browser.
 frontend-1  | 
 frontend-1  |   Local:            http://localhost:3000
 frontend-1  |   On Your Network:  http://<your-machine-ip>:3000
-frontend-1  | 
-frontend-1  | Note that the development build is not optimized.
-frontend-1  | To create a production build, use npm run build.
 ```
 You will now be able to access the application on http://localhost:3000
 
