@@ -9,8 +9,14 @@ const AlertMessage: React.FC = () => {
     throw new Error("AppContext must be used within an AppProvider");
   }
 
-  const { openSuccess, openError, message, setOpenSuccess, setOpenError } =
-    context;
+  const {
+    openSuccess,
+    openError,
+    message,
+    setOpenSuccess,
+    setOpenError,
+    statusError,
+  } = context;
 
   const open = openSuccess || openError;
   const severity = openSuccess ? "success" : "error";
@@ -20,7 +26,7 @@ const AlertMessage: React.FC = () => {
     if (openError) setOpenError(false);
   };
 
-  if (!open || !message) return null;
+  if (!open || !message || !openError || !statusError) return null;
 
   return (
     <Alert

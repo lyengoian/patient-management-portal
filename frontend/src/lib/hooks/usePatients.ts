@@ -16,6 +16,7 @@ const usePatients = (statuses: Status[]) => {
 
   useEffect(() => {
     filterPatients();
+    // eslint-disable-next-line
   }, [searchQuery, patients, statuses]);
 
   const loadPatients = () => {

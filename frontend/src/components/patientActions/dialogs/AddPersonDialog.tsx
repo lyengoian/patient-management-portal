@@ -114,7 +114,8 @@ const AddPersonDialog: React.FC = () => {
                 color="inherit"
                 size="small"
                 onClick={() => {
-                  setStatusError("");
+                  setMessage(null);
+                  setOpenError(false);
                 }}
               >
                 <CloseIcon fontSize="inherit" />

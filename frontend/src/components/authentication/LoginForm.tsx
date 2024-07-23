@@ -85,9 +85,12 @@ const LoginForm: React.FC = () => {
           setShowAlert(true);
         });
     } else {
+      setShowAlert(false);
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
+          setUser(user);
+          setShowSignedUp(false);
         })
         .catch((error) => {
           handleFirebaseError(error);

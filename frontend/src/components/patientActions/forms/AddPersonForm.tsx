@@ -142,7 +142,7 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
               onChange={(newDate: any) =>
                 handleFieldChange(0, "dateOfBirth", newDate)
               }
-              slotProps={{ textField: { required: true } }}
+              slotProps={{ textField: { required: true, fullWidth: true } }}
             />
           </LocalizationProvider>
         </Grid>
@@ -151,6 +151,7 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
             <InputLabel>Status</InputLabel>
             <Select
               value={selectedStatus}
+              label="Status"
               onChange={(e) =>
                 handleFieldChange(0, "selectedStatus", e.target.value)
               }
@@ -201,14 +202,14 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
               />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl required fullWidth>
                 <InputLabel>State</InputLabel>
                 <Select
+                  label="State"
                   value={address.state}
                   onChange={(e) =>
                     handleFieldChange(index, "state", e.target.value)
                   }
-                  required
                 >
                   {states.map((option) => (
                     <MenuItem key={option.name} value={option.name}>

@@ -193,7 +193,7 @@ const EditPersonForm: React.FC<Props> = ({
               label="Date of Birth"
               value={dateOfBirth}
               onChange={(newDate) => handleFieldChange("dateOfBirth", newDate)}
-              slotProps={{ textField: { required: true } }}
+              slotProps={{ textField: { required: true, fullWidth: true } }}
             />
           </LocalizationProvider>
         </Grid>
@@ -202,6 +202,7 @@ const EditPersonForm: React.FC<Props> = ({
             <InputLabel>Status</InputLabel>
             <Select
               value={selectedStatus}
+              label="Status"
               onChange={(e) =>
                 handleFieldChange("selectedStatus", e.target.value)
               }
@@ -252,14 +253,14 @@ const EditPersonForm: React.FC<Props> = ({
               />
             </Grid>
             <Grid item xs={12} sm={4}>
-              <FormControl fullWidth>
+              <FormControl required fullWidth>
                 <InputLabel>State</InputLabel>
                 <Select
+                  label="State"
                   value={address.state}
                   onChange={(e) =>
                     handleFieldChange("state", e.target.value, index)
                   }
-                  required
                 >
                   {states.map((option) => (
                     <MenuItem key={option.name} value={option.name}>

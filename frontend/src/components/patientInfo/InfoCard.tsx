@@ -16,7 +16,7 @@ import { TransitionProps } from "@mui/material/transitions";
 import axios from "axios";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
-import { Address, Patient, Status } from "../../lib/types/types";
+import { Address, Patient } from "../../lib/types/types";
 import { AppContext } from "../../lib/contexts/AppContext";
 dayjs.extend(utc);
 
@@ -108,7 +108,9 @@ const InfoCard: React.FC = () => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Card sx={{ padding: 3, maxHeight: "70vh", overflow: "auto" }}>
+      <Card
+        sx={{ padding: 3, paddingTop: 0, maxHeight: "70vh", overflow: "auto" }}
+      >
         <CardContent>
           <Grid container spacing={2}>
             <Grid item xs={12}>
