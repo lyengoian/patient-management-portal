@@ -22,27 +22,53 @@ This project is a simple web application build with a React Frontend with Materi
 ### Signing Up
 1. From the landing page, simply click on `Sign Up` and enter an email address and password. If a user has already signed up with that email address, you will not be able to recreate one and will have to sign in instead.
    **NOTE** that the user will need to enter a valid email address and a password with at least 6 characters to sign up.
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/213274f2-e2c6-435e-b8a4-e868fdb4e538">
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/c6c1393c-7bdc-4967-9af4-0fc92339171b">
 
-### Logging In
+### Signing In
 2. From the landing page, simply enter the correct email and password combination and click on `Sign In`. You will need to create a user first if that email has not been registered yet.
    **NOTE** that the user will need to enter a valid email address and a password to sign in.
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/a089d039-9fbd-47e8-98b6-e930b9683ac7">
+
+### Resetting Password
+2. From the landing page, simply click on `Forgot Password?`, enter the correct email, and click on `Send Reset Email`. 
+   **NOTE** that a password reset email will only be sent if the user exists.
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/204daa94-05fa-409f-ad32-c6c951c6692e">
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/e5dc68ee-2dc4-47cf-8d90-206b50651c5f">
 
 ### Logging Out
 3. From the patient management portal, simply click on the `Logout` button. You will then be redirected back to the landing page.
 
+### Patient Managemenet Portal
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/57d66377-ec31-4f50-8c06-a3a2eb5fa807">
+
 ### Adding a Patient
 4. From the patient management portal, simply click on the <> icon. A drawer will open, and a form will be presented to enter details about the new patient. Fill out all of the required information, then submit. Once the form is submitted, the drawer will close and the new patient will appear in the portal.
     **NOTE** that the user will need to fill out all required information for the form to submit. Additional fields and addresses can be added and removed as needed. At least one address is required for each patient.
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/1edb0f6f-4e99-4493-abc9-157ab72543de">
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/b52c097e-4695-439e-9cdb-367ba4f83aba">
 
 ### Editing a Patient
 5. From the patient management portal, simply click on the <> icon. A drawer will open, and a form will be presented to enter updated information about the existing patient. All form fields will be pre-filled with any existing information. Fill out all of the required information as needed, then submit. Once the form is submitted, the drawer will close and the updated patient will appear in the portal.
     **NOTE** that the user will need to fill out all required information for the form to submit. Any fields that were not updated will be submitted as-is. Additional fields and addresses can be added and removed as needed. At least one address is required for each patient.
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/99cba95e-5419-41bf-b097-7795af6d5e1b">
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/85073633-d3e6-4597-8cc2-9a932723159e">
 
 ### Viewing Patient Information
-6. From the patient management portal, simply click on the desired patient. A card will open, statically displaying all of the patient's information, organized by categories.
+6. From the patient management portal, simply click on the desired patient. A scrollable card will open, statically displaying all of the patient's information, organized by categories.
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/70b45c35-0a9e-4113-a6e0-375f60d7b5f9">
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/72768f4d-5b47-4496-82fb-2c303db7e31a">
 
 ### Deleting a Patient
 7. From the patient management portal, simply click on the <> icon. A dialog will open, asking to confirm the deletion action. Click on `Yes, Delete.` to delete the patient. Once the patient is successfully deleted, the dialog will close, and the patient will no longe appear in the portal.
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/16ffebfd-8d01-4926-98f8-d1512efca7b4">
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/304b5ddd-fa64-4897-b488-92afc41c5b56">
+
+### Filtering/Searching Patients
+7. From the patient management portal, simply start typing search criteria. You can search for patients based on any criteria, such as name, date of birth, zip code, additional fields, etc. Multiple filters can be applied by separating each with a semicolon (;).
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/0c0be07d-7161-4bad-b2c1-897d34a195e1">
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/a53c60d2-8a31-40a0-9803-f4753082cac7">
+<img width="1501" alt="image" src="https://github.com/user-attachments/assets/6228197a-68b8-45d4-8873-f4278d65d0f6">
 
 **NOTE** that with all actions that make calls to the DB, error or success alerts will be shown to the user to confirm successful actions or notify that any errors have occured.
 
