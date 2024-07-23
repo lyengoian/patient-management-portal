@@ -2,6 +2,12 @@
 
 This project is a web application built with a React Frontend with Material UI components, and Express Backend with a PostgreSQL database, containerized with Docker. The application allows a user to sign up, log in, log out, and reset their password before managing their patients. Upon login, the user enters a patient management portal, where they will see a list of their current patients, as well as have the ability to add, edit, and remove any patients. Additionally, the user will be able to search for patients from the list. The user will be presented various error messages if any conflicts arise, such as trying to sign up with incorrect credentials or any errors from adding/removing/editing patients, and more.
 
+- [How to Use](#how-to-use)
+  - [Authentication](#signing-up)
+  - [Patient Management](#patient-managemenet-portal)
+  - [Search](#filteringsearching-patients)
+- [Running the Application](#running-the-application)
+
 ## Built With / Technologies Used
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
 ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
