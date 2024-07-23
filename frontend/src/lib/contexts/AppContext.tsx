@@ -1,6 +1,8 @@
-import React, { createContext, useState, useEffect, ReactNode } from "react";
-import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
-import axios from "axios";
+import { User } from "firebase/auth";
+import React, { createContext, useState, ReactNode } from "react";
+import useAuth from "../hooks/useAuth";
+import usePatients from "../hooks/usePatients";
+import useStatuses from "../hooks/useStatuses";
 import { Patient, Status } from "../types/types";
 
 interface AppContextProps {
@@ -15,6 +17,7 @@ interface AppContextProps {
   deleteDialogOpen: boolean;
   setDeleteDialogOpen: React.Dispatch<React.SetStateAction<boolean>>;
   patients: Patient[];
+  filteredPatients: Patient[];
   setPatients: React.Dispatch<React.SetStateAction<Patient[]>>;
   selectedPatientId: number | null;
   setSelectedPatientId: React.Dispatch<React.SetStateAction<number | null>>;
@@ -33,6 +36,10 @@ interface AppContextProps {
   loadPatients: () => void;
   fetchStatuses: () => void;
   handleLogout: () => void;
+  searchQuery: string;
+  setSearchQuery: React.Dispatch<React.SetStateAction<string>>;
+  showSignedUp: boolean;
+  setShowSignedUp: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -43,74 +50,28 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [infoCardOpen, setInfoCardOpen] = useState(false);
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-  const [patients, setPatients] = useState<Patient[]>([]);
   const [selectedPatientId, setSelectedPatientId] = useState<number | null>(
     null
   );
-  const [openSuccess, setOpenSuccess] = useState(false);
-  const [openError, setOpenError] = useState(false);
-  const [message, setMessage] = useState<string | null>(null);
-  const [statuses, setStatuses] = useState<Status[]>([]);
-  const [statusError, setStatusError] = useState("");
-  const [user, setUser] = useState<User | null>(null);
+  const [showSignedUp, setShowSignedUp] = useState(false);
 
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user ? user : null);
-    });
-    return () => unsubscribe();
-  }, []);
-
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (openError) {
-      timer = setTimeout(() => {
-        setOpenError(false);
-      }, 3000);
-    }
-    if (openSuccess) {
-      timer = setTimeout(() => {
-        setOpenSuccess(false);
-      }, 3000);
-    }
-    return () => clearTimeout(timer);
-  }, [openError, openSuccess]);
-
-  useEffect(() => {
-    loadPatients();
-  }, []);
-
-  const loadPatients = () => {
-    axios
-      .get("http://localhost:4000/api/patients")
-      .then((response) => setPatients(response.data))
-      .catch(() => {
-        setMessage(
-          "There was an error fetching the patients. Please try again."
-        );
-        setOpenError(true);
-      });
-  };
-
-  const fetchStatuses = () => {
-    axios
-      .get("http://localhost:4000/api/statuses")
-      .then((response) => setStatuses(response.data))
-      .catch(() => {
-        setStatusError("There was an error fetching the statuses.");
-      });
-  };
-
-  const handleLogout = () => {
-    const auth = getAuth();
-    signOut(auth)
-      .then(() => setUser(null))
-      .catch((error) => {
-        setOpenError(true);
-        console.error("Error signing out:", error);
-      });
-  };
+  const { user, handleLogout, setUser } = useAuth();
+  const { statuses, setStatuses, fetchStatuses, statusError, setStatusError } =
+    useStatuses();
+  const {
+    patients,
+    setPatients,
+    filteredPatients,
+    searchQuery,
+    setSearchQuery,
+    message,
+    openError,
+    openSuccess,
+    setOpenError,
+    setOpenSuccess,
+    setMessage,
+    loadPatients,
+  } = usePatients(statuses);
 
   return (
     <AppContext.Provider
@@ -127,6 +88,7 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setDeleteDialogOpen,
         patients,
         setPatients,
+        filteredPatients,
         selectedPatientId,
         setSelectedPatientId,
         openSuccess,
@@ -144,6 +106,10 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         loadPatients,
         fetchStatuses,
         handleLogout,
+        searchQuery,
+        setSearchQuery,
+        showSignedUp,
+        setShowSignedUp,
       }}
     >
       {children}

@@ -11,7 +11,7 @@ const PatientList: React.FC = () => {
     throw new Error("AppContext must be used within an AppProvider");
   }
 
-  const { patients } = context;
+  const { filteredPatients } = context;
 
   return (
     <List
@@ -23,8 +23,8 @@ const PatientList: React.FC = () => {
         padding: "10px",
       }}
     >
-      {patients.length > 0 ? (
-        patients.map((patient, index) => (
+      {filteredPatients.length > 0 ? (
+        filteredPatients.map((patient, index) => (
           <PatientListItem key={patient.id} patient={patient} index={index} />
         ))
       ) : (

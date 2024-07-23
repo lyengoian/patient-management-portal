@@ -236,12 +236,13 @@ app.delete("/api/patients/:id", async (req, res) => {
 app.get("/api/patients", async (req, res) => {
   try {
     const result = await pool.query(`
-      SELECT p.id, p.first_name, p.middle_name, p.last_name, p.date_of_birth, s.status_name,
-             a.address_line_1, a.address_line_2, a.city, a.state, a.zip_code
+      SELECT p.id, p.first_name, p.middle_name, p.last_name, p.date_of_birth, s.status_name,a.address_line_1, a.address_line_2, a.city, a.state, a.zip_code, paf.field_value, af.field_name
       FROM patients p
       LEFT JOIN patient_status ps ON p.id = ps.patient_id
       LEFT JOIN statuses s ON ps.status_id = s.id
       LEFT JOIN addresses a ON p.id = a.patient_id
+      LEFT JOIN patient_additional_fields paf ON p.id = paf.patient_id
+      LEFT JOIN additional_fields af ON paf.field_id = af.id
     `);
 
     const patients: { [key: number]: Patient } = {};
@@ -266,6 +267,13 @@ app.get("/api/patients", async (req, res) => {
         state: row.state,
         zipCode: row.zip_code,
       });
+
+      if (row.field_name) {
+        patients[row.id].additional_fields.push({
+          fieldName: row.field_name,
+          fieldValue: row.field_value,
+        });
+      }
     });
 
     res.json(Object.values(patients));

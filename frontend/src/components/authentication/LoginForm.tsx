@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -17,6 +17,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 import FinniHealthLogo from "../../lib/assets/logo.svg";
 import { auth } from "../../firebaseConfig";
+import { AppContext } from "../../lib/contexts/AppContext";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -26,6 +27,12 @@ const LoginForm: React.FC = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [, setUser] = useState<User | null>(null);
   const [isResettingPassword, setIsResettingPassword] = useState(false);
+
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error("AppContext must be used within an AppProvider");
+  }
+  const { handleLogout, showSignedUp, setShowSignedUp } = context;
 
   const handleFirebaseError = (error: any) => {
     switch (error.code) {
@@ -68,7 +75,10 @@ const LoginForm: React.FC = () => {
     if (isSignUp) {
       createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
-          const user = userCredential.user;
+          setShowSignedUp(true);
+          setIsSignUp(false);
+          setPassword("");
+          handleLogout();
         })
         .catch((error) => {
           handleFirebaseError(error);
@@ -127,6 +137,26 @@ const LoginForm: React.FC = () => {
           {error}
         </Alert>
       )}
+      {showSignedUp && (
+        <Alert
+          sx={{ marginBottom: 1, width: "fit-content" }}
+          severity="success"
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setShowSignedUp(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          Sign up successful! Please login.
+        </Alert>
+      )}
 
       <Typography variant="h5" sx={{ marginBottom: "1rem" }}>
         {isSignUp ? "Sign Up" : "Sign In"}
@@ -176,7 +206,10 @@ const LoginForm: React.FC = () => {
       <Button
         variant="contained"
         color="secondary"
-        onClick={() => setIsSignUp(!isSignUp)}
+        onClick={() => {
+          setIsSignUp(!isSignUp);
+          setShowAlert(false);
+        }}
       >
         {isSignUp ? "Sign In" : "Sign Up"}
       </Button>

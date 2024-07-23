@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
 
 const useAuth = () => {
@@ -7,18 +7,21 @@ const useAuth = () => {
   useEffect(() => {
     const auth = getAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user || null);
+      setUser(user ? user : null);
     });
     return () => unsubscribe();
   }, []);
 
-  const logout = async () => {
+  const handleLogout = () => {
     const auth = getAuth();
-    await signOut(auth);
-    setUser(null);
+    signOut(auth)
+      .then(() => setUser(null))
+      .catch((error) => {
+        console.error("Error signing out:", error);
+      });
   };
 
-  return { user, logout };
+  return { user, setUser, handleLogout };
 };
 
 export default useAuth;

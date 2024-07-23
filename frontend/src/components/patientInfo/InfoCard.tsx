@@ -9,6 +9,7 @@ import {
   Slide,
   Card,
   CardContent,
+  Divider,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { TransitionProps } from "@mui/material/transitions";
@@ -37,6 +38,7 @@ const InfoCard: React.FC = () => {
     setInfoCardOpen: setOpen,
     selectedPatientId: patientId,
     setSelectedIndex,
+    statuses,
   } = context;
 
   const [firstName, setFirstName] = useState("");
@@ -46,23 +48,11 @@ const InfoCard: React.FC = () => {
   const [selectedStatus, setSelectedStatus] = useState<string | undefined>(
     undefined
   );
-  const [statuses, setStatuses] = useState<Status[]>([]);
   const [addresses, setAddresses] = useState<Address[]>([]);
   const [additionalFields, setAdditionalFields] = useState<any[]>([]);
 
   useEffect(() => {
-    axios
-      .get("http://localhost:4000/api/statuses")
-      .then((response) => {
-        setStatuses(response.data);
-      })
-      .catch((error) => {
-        console.error("There was an error fetching the statuses!", error);
-      });
-  }, []);
-
-  useEffect(() => {
-    if (patientId) {
+    if (open && patientId) {
       axios
         .get(`http://localhost:4000/api/patients/${patientId}`)
         .then((response) => {
@@ -84,7 +74,7 @@ const InfoCard: React.FC = () => {
           console.error("There was an error fetching the patient data.", error);
         });
     }
-  }, [patientId, statuses]);
+  }, [open, patientId, statuses]);
 
   const handleClose = () => {
     setSelectedIndex(null);
@@ -121,15 +111,31 @@ const InfoCard: React.FC = () => {
       <Card sx={{ padding: 3, maxHeight: "70vh", overflow: "auto" }}>
         <CardContent>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <Divider>
+                <Typography variant="h6" color="primary">
+                  Basic Information
+                </Typography>
+              </Divider>
+            </Grid>
             {renderInfo("First Name", firstName)}
             {renderInfo("Middle Name", middleName)}
             {renderInfo("Last Name", lastName)}
             {renderInfo("Date of Birth", dateOfBirth)}
             {renderInfo("Status", selectedStatus)}
+            <Grid item xs={12}>
+              <Divider>
+                <Typography variant="h6" color="primary">
+                  Address
+                </Typography>
+              </Divider>
+            </Grid>
             {addresses.map((address, index) => (
               <React.Fragment key={index}>
                 <Grid item xs={12}>
-                  <Typography variant="h6">{`Address ${index + 1}`}</Typography>
+                  <Typography variant="subtitle1" color="primary">{`Address ${
+                    index + 1
+                  }`}</Typography>
                 </Grid>
                 {renderInfo("Address Line 1", address.addressLine1)}
                 {renderInfo("Address Line 2", address.addressLine2)}
@@ -138,9 +144,18 @@ const InfoCard: React.FC = () => {
                 {renderInfo("Zip Code", address.zipCode)}
               </React.Fragment>
             ))}
+            <Grid item xs={12}>
+              <Divider>
+                <Typography variant="h6" color="primary">
+                  Additional Fields
+                </Typography>
+              </Divider>
+            </Grid>
             {additionalFields.map((field, index) => (
               <Grid item xs={12} key={index}>
-                <Typography variant="subtitle1">{field.fieldName}</Typography>
+                <Typography sx={{ fontWeight: "900" }} variant="subtitle1">
+                  {field.fieldName}
+                </Typography>
                 <Typography>{field.fieldValue}</Typography>
               </Grid>
             ))}
@@ -153,7 +168,9 @@ const InfoCard: React.FC = () => {
 
 const renderInfo = (label: string, value: string | undefined | null) => (
   <Grid item xs={12} sm={6}>
-    <Typography variant="subtitle1">{label}</Typography>
+    <Typography sx={{ fontWeight: "900" }} variant="subtitle1">
+      {label}
+    </Typography>
     <Typography>{value}</Typography>
   </Grid>
 );

@@ -13,6 +13,7 @@ import InfoCard from "../patientInfo/InfoCard";
 import AlertMessage from "../alerts/AlertMessage";
 import { Toolbar } from "@mui/material";
 import { AppProvider, AppContext } from "../../lib/contexts/AppContext";
+import SearchBar from "./SearchBar";
 
 const App: React.FC = () => {
   return (
@@ -30,9 +31,9 @@ const Content: React.FC = () => {
   if (!context) {
     throw new Error("AppContext must be used within an AppProvider");
   }
-  const { user } = context;
+  const { user, showSignedUp } = context;
 
-  return user ? (
+  return user && !showSignedUp ? (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <PatientAppBar />
@@ -47,6 +48,7 @@ const Content: React.FC = () => {
       >
         <Toolbar />
         <AlertMessage />
+        <SearchBar />
         <EditPersonDialog />
         <AddPersonDialog />
         <DeletePersonDialog />

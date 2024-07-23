@@ -64,6 +64,7 @@ export interface Patient {
   last_name: string;
   date_of_birth: string;
   status_id: number;
+  status_name: string;
   addresses: Address[];
   additional_fields: AdditionalField[];
 }
