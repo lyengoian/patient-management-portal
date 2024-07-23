@@ -29,14 +29,12 @@ CREATE TABLE addresses (
     city VARCHAR(100) NOT NULL,
     state VARCHAR(100) NOT NULL,
     zip_code VARCHAR(20) NOT NULL,
-    country VARCHAR(100) NOT NULL,
     FOREIGN KEY (patient_id) REFERENCES patients(id) ON DELETE CASCADE
 );
 
 CREATE TABLE additional_fields (
     id SERIAL PRIMARY KEY,
-    field_name VARCHAR(100) NOT NULL,
-    field_type VARCHAR(50) NOT NULL
+    field_name VARCHAR(100) NOT NULL
 );
 
 CREATE TABLE patient_additional_fields (

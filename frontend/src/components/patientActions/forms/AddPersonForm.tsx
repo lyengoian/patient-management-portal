@@ -1,11 +1,22 @@
-import React, { useState } from 'react';
-import { Grid, TextField, Button, IconButton, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { LocalizationProvider, DatePicker } from '@mui/x-date-pickers';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { Dayjs } from 'dayjs';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
-import { AdditionalField, Address, Status } from '../../../lib/types/types';
+import React, { useState } from "react";
+import {
+  Grid,
+  TextField,
+  Button,
+  IconButton,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Typography,
+} from "@mui/material";
+import { LocalizationProvider, DatePicker } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { Dayjs } from "dayjs";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import { AdditionalField, Address, Status } from "../../../lib/types/types";
+import states from "states-us";
 
 interface Props {
   statuses: Status[];
@@ -13,39 +24,71 @@ interface Props {
 }
 
 const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
-  const [firstName, setFirstName] = useState('');
-  const [middleName, setMiddleName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [middleName, setMiddleName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState<Dayjs | null>(null);
-  const [selectedStatus, setSelectedStatus] = useState('');
-  const [address, setAddress] = useState<Address>({
-    addressLine1: '', addressLine2: '', city: '', state: '', zipCode: '', country: ''
-  });
-  const [additionalFields, setAdditionalFields] = useState<AdditionalField[]>([{ fieldName: '', fieldValue: '' }]);
+  const [selectedStatus, setSelectedStatus] = useState("");
+  const [addresses, setAddresses] = useState<Address[]>([
+    { addressLine1: "", addressLine2: "", city: "", state: "", zipCode: "" },
+  ]);
+  const [additionalFields, setAdditionalFields] = useState<AdditionalField[]>([
+    { fieldName: "", fieldValue: "" },
+  ]);
 
-  const handleFieldChange = (field: keyof Address | 'firstName' | 'middleName' | 'lastName' | 'dateOfBirth' | 'selectedStatus', value: any) => {
-    switch (field) {
-      case 'firstName': setFirstName(value); break;
-      case 'middleName': setMiddleName(value); break;
-      case 'lastName': setLastName(value); break;
-      case 'dateOfBirth': setDateOfBirth(value); break;
-      case 'selectedStatus': setSelectedStatus(value); break;
-      default: setAddress({ ...address, [field]: value });
+  const handleFieldChange = (
+    index: number,
+    field:
+      | keyof Address
+      | "firstName"
+      | "middleName"
+      | "lastName"
+      | "dateOfBirth"
+      | "selectedStatus",
+    value: any
+  ) => {
+    if (field === "firstName") setFirstName(value);
+    else if (field === "middleName") setMiddleName(value);
+    else if (field === "lastName") setLastName(value);
+    else if (field === "dateOfBirth") setDateOfBirth(value);
+    else if (field === "selectedStatus") setSelectedStatus(value);
+    else {
+      const newAddresses = [...addresses];
+      newAddresses[index][field] = value;
+      setAddresses(newAddresses);
     }
   };
 
-  const handleAdditionalFieldChange = (index: number, field: keyof AdditionalField, value: string) => {
+  const handleAdditionalFieldChange = (
+    index: number,
+    field: keyof AdditionalField,
+    value: string
+  ) => {
     const newFields = [...additionalFields];
     newFields[index][field] = value;
     setAdditionalFields(newFields);
   };
 
   const handleAddField = () => {
-    setAdditionalFields([...additionalFields, { fieldName: '', fieldValue: '' }]);
+    setAdditionalFields([
+      ...additionalFields,
+      { fieldName: "", fieldValue: "" },
+    ]);
   };
 
   const handleRemoveField = (index: number) => {
     setAdditionalFields(additionalFields.filter((_, i) => i !== index));
+  };
+
+  const handleAddAddress = () => {
+    setAddresses([
+      ...addresses,
+      { addressLine1: "", addressLine2: "", city: "", state: "", zipCode: "" },
+    ]);
+  };
+
+  const handleRemoveAddress = (index: number) => {
+    setAddresses(addresses.filter((_, i) => i !== index));
   };
 
   const handleSubmit = (event: React.FormEvent) => {
@@ -56,7 +99,7 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
       last_name: lastName,
       date_of_birth: dateOfBirth,
       status_id: selectedStatus,
-      address: address,
+      addresses: addresses,
       additional_fields: additionalFields,
     };
     onSubmit(newPatient);
@@ -69,7 +112,7 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
           <TextField
             label="First Name"
             value={firstName}
-            onChange={(e) => handleFieldChange('firstName', e.target.value)}
+            onChange={(e) => handleFieldChange(0, "firstName", e.target.value)}
             required
             fullWidth
           />
@@ -78,7 +121,7 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
           <TextField
             label="Middle Name"
             value={middleName}
-            onChange={(e) => handleFieldChange('middleName', e.target.value)}
+            onChange={(e) => handleFieldChange(0, "middleName", e.target.value)}
             fullWidth
           />
         </Grid>
@@ -86,7 +129,7 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
           <TextField
             label="Last Name"
             value={lastName}
-            onChange={(e) => handleFieldChange('lastName', e.target.value)}
+            onChange={(e) => handleFieldChange(0, "lastName", e.target.value)}
             required
             fullWidth
           />
@@ -96,7 +139,9 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
             <DatePicker
               label="Date of Birth"
               value={dateOfBirth}
-              onChange={(newDate: any) => handleFieldChange('dateOfBirth', newDate)}
+              onChange={(newDate: any) =>
+                handleFieldChange(0, "dateOfBirth", newDate)
+              }
               slotProps={{ textField: { required: true } }}
             />
           </LocalizationProvider>
@@ -106,7 +151,9 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
             <InputLabel>Status</InputLabel>
             <Select
               value={selectedStatus}
-              onChange={(e) => handleFieldChange('selectedStatus', e.target.value)}
+              onChange={(e) =>
+                handleFieldChange(0, "selectedStatus", e.target.value)
+              }
             >
               {statuses.map((status) => (
                 <MenuItem key={status.id} value={status.id}>
@@ -116,24 +163,99 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
             </Select>
           </FormControl>
         </Grid>
-        {Object.keys(address).map((key) => (
-          <Grid item xs={12} sm={6} key={key}>
-            <TextField
-              label={key.charAt(0).toUpperCase() + key.slice(1).replace(/[A-Z]/g, ' $&')}
-              value={address[key as keyof Address]}
-              onChange={(e) => handleFieldChange(key as keyof Address, e.target.value)}
-              required={key !== 'addressLine2'}
-              fullWidth
-            />
-          </Grid>
+        {addresses.map((address, index) => (
+          <React.Fragment key={index}>
+            <Grid item xs={12}>
+              <Typography variant="h6">{`Address ${index + 1}`}</Typography>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Address Line 1"
+                value={address.addressLine1}
+                onChange={(e) =>
+                  handleFieldChange(index, "addressLine1", e.target.value)
+                }
+                required
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <TextField
+                label="Address Line 2"
+                value={address.addressLine2}
+                onChange={(e) =>
+                  handleFieldChange(index, "addressLine2", e.target.value)
+                }
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                label="City"
+                value={address.city}
+                onChange={(e) =>
+                  handleFieldChange(index, "city", e.target.value)
+                }
+                required
+                fullWidth
+              />
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <FormControl fullWidth>
+                <InputLabel>State</InputLabel>
+                <Select
+                  value={address.state}
+                  onChange={(e) =>
+                    handleFieldChange(index, "state", e.target.value)
+                  }
+                  required
+                >
+                  {states.map((option) => (
+                    <MenuItem key={option.name} value={option.name}>
+                      {option.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                label="Zip Code"
+                value={address.zipCode}
+                onChange={(e) =>
+                  handleFieldChange(index, "zipCode", e.target.value)
+                }
+                required
+                fullWidth
+              />
+            </Grid>
+            {addresses.length > 1 && (
+              <Grid item xs={12}>
+                <IconButton onClick={() => handleRemoveAddress(index)}>
+                  <RemoveCircleIcon />
+                </IconButton>
+              </Grid>
+            )}
+          </React.Fragment>
         ))}
+        <Grid item xs={12}>
+          <Button onClick={handleAddAddress} startIcon={<AddCircleIcon />}>
+            Add Another Address
+          </Button>
+        </Grid>
         {additionalFields.map((field, index) => (
           <Grid container spacing={2} marginLeft={0} marginTop={1} key={index}>
             <Grid item xs={12} sm={5}>
               <TextField
                 label="Field Name"
                 value={field.fieldName}
-                onChange={(e) => handleAdditionalFieldChange(index, 'fieldName', e.target.value)}
+                onChange={(e) =>
+                  handleAdditionalFieldChange(
+                    index,
+                    "fieldName",
+                    e.target.value
+                  )
+                }
                 required
                 fullWidth
               />
@@ -142,7 +264,13 @@ const AddPersonForm: React.FC<Props> = ({ statuses, onSubmit }) => {
               <TextField
                 label="Field Value"
                 value={field.fieldValue}
-                onChange={(e) => handleAdditionalFieldChange(index, 'fieldValue', e.target.value)}
+                onChange={(e) =>
+                  handleAdditionalFieldChange(
+                    index,
+                    "fieldValue",
+                    e.target.value
+                  )
+                }
                 required
                 fullWidth
               />

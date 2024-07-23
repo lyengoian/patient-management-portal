@@ -19,10 +19,12 @@
     "@types/react-dom": "^18.3.0",
     "axios": "^1.7.2",
     "dayjs": "^1.11.12",
+    "dayjs-plugin-utc": "^0.1.2",
     "firebase": "^10.12.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
+    "states-us": "^1.0.4",
     "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },

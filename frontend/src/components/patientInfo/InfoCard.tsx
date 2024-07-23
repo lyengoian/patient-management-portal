@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from "react";
 import {
   Dialog,
   AppBar,
@@ -9,13 +9,15 @@ import {
   Slide,
   Card,
   CardContent,
-} from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import { TransitionProps } from '@mui/material/transitions';
-import axios from 'axios';
-import dayjs from 'dayjs';
-import { Address, Patient, Status } from '../../lib/types/types';
-import { AppContext } from '../../lib/contexts/AppContext';
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { TransitionProps } from "@mui/material/transitions";
+import axios from "axios";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import { Address, Patient, Status } from "../../lib/types/types";
+import { AppContext } from "../../lib/contexts/AppContext";
+dayjs.extend(utc);
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children: React.ReactElement },
@@ -27,7 +29,7 @@ const Transition = React.forwardRef(function Transition(
 const InfoCard: React.FC = () => {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error('AppContext must be used within an AppProvider');
+    throw new Error("AppContext must be used within an AppProvider");
   }
 
   const {
@@ -37,50 +39,52 @@ const InfoCard: React.FC = () => {
     setSelectedIndex,
   } = context;
 
-  const [firstName, setFirstName] = useState('');
-  const [middleName, setMiddleName] = useState('');
-  const [lastName, setLastName] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [middleName, setMiddleName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState<string | null>(null);
-  const [selectedStatus, setSelectedStatus] = useState('');
+  const [selectedStatus, setSelectedStatus] = useState<string | undefined>(
+    undefined
+  );
   const [statuses, setStatuses] = useState<Status[]>([]);
-  const [address, setAddress] = useState<Address>({
-    addressLine1: '',
-    addressLine2: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    country: ''
-  });
+  const [addresses, setAddresses] = useState<Address[]>([]);
   const [additionalFields, setAdditionalFields] = useState<any[]>([]);
 
   useEffect(() => {
-    axios.get('http://localhost:4000/api/statuses')
-      .then(response => {
+    axios
+      .get("http://localhost:4000/api/statuses")
+      .then((response) => {
         setStatuses(response.data);
       })
-      .catch(error => {
-        console.error('There was an error fetching the statuses!', error);
+      .catch((error) => {
+        console.error("There was an error fetching the statuses!", error);
       });
   }, []);
 
   useEffect(() => {
     if (patientId) {
-      axios.get(`http://localhost:4000/api/patients/${patientId}`)
-        .then(response => {
+      axios
+        .get(`http://localhost:4000/api/patients/${patientId}`)
+        .then((response) => {
           const patient: Patient = response.data;
           setFirstName(patient.first_name);
           setMiddleName(patient.middle_name);
           setLastName(patient.last_name);
-          setDateOfBirth(dayjs(patient.date_of_birth).format('YYYY-MM-DD'));
-          setSelectedStatus(patient.status_id.toString());
-          setAddress(patient.address);
+          setDateOfBirth(
+            dayjs(patient.date_of_birth).utc().format("MM-DD-YYYY")
+          );
+          setSelectedStatus(
+            statuses.find((status) => status.id === patient.status_id)
+              ?.status_name
+          );
+          setAddresses(patient.addresses);
           setAdditionalFields(patient.additional_fields || []);
         })
-        .catch(error => {
-          console.error('There was an error fetching the patient data.', error);
+        .catch((error) => {
+          console.error("There was an error fetching the patient data.", error);
         });
     }
-  }, [patientId]);
+  }, [patientId, statuses]);
 
   const handleClose = () => {
     setSelectedIndex(null);
@@ -93,8 +97,9 @@ const InfoCard: React.FC = () => {
       open={open}
       onClose={handleClose}
       TransitionComponent={Transition}
+      scroll="paper"
     >
-      <AppBar sx={{ position: 'relative', backgroundColor: '#DE7D41' }}>
+      <AppBar sx={{ position: "relative", backgroundColor: "#DE7D41" }}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -104,25 +109,35 @@ const InfoCard: React.FC = () => {
           >
             <CloseIcon />
           </IconButton>
-          <Typography sx={{ ml: 2, flex: 1 }} variant="subtitle1" component="div">
+          <Typography
+            sx={{ ml: 2, flex: 1 }}
+            variant="subtitle1"
+            component="div"
+          >
             Patient Details
           </Typography>
         </Toolbar>
       </AppBar>
-      <Card sx={{ padding: 3 }}>
+      <Card sx={{ padding: 3, maxHeight: "70vh", overflow: "auto" }}>
         <CardContent>
           <Grid container spacing={2}>
             {renderInfo("First Name", firstName)}
             {renderInfo("Middle Name", middleName)}
             {renderInfo("Last Name", lastName)}
             {renderInfo("Date of Birth", dateOfBirth)}
-            {renderInfo("Status", statuses.find(status => status.id.toString() === selectedStatus)?.status_name)}
-            {renderInfo("Address Line 1", address.addressLine1)}
-            {renderInfo("Address Line 2", address.addressLine2)}
-            {renderInfo("City", address.city)}
-            {renderInfo("State", address.state)}
-            {renderInfo("Zip Code", address.zipCode)}
-            {renderInfo("Country", address.country)}
+            {renderInfo("Status", selectedStatus)}
+            {addresses.map((address, index) => (
+              <React.Fragment key={index}>
+                <Grid item xs={12}>
+                  <Typography variant="h6">{`Address ${index + 1}`}</Typography>
+                </Grid>
+                {renderInfo("Address Line 1", address.addressLine1)}
+                {renderInfo("Address Line 2", address.addressLine2)}
+                {renderInfo("City", address.city)}
+                {renderInfo("State", address.state)}
+                {renderInfo("Zip Code", address.zipCode)}
+              </React.Fragment>
+            ))}
             {additionalFields.map((field, index) => (
               <Grid item xs={12} key={index}>
                 <Typography variant="subtitle1">{field.fieldName}</Typography>

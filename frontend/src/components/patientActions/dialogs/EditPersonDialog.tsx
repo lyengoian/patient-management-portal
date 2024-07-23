@@ -1,10 +1,19 @@
-import React, { useContext } from 'react';
-import { Dialog, AppBar, Toolbar, IconButton, Typography, Slide, Container, Alert } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import { TransitionProps } from '@mui/material/transitions';
-import EditPersonForm from '../forms/EditPersonForm';
-import { AppContext } from '../../../lib/contexts/AppContext';
-import axios from 'axios';
+import React, { useContext } from "react";
+import {
+  Dialog,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Slide,
+  Container,
+  Alert,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { TransitionProps } from "@mui/material/transitions";
+import EditPersonForm from "../forms/EditPersonForm";
+import { AppContext } from "../../../lib/contexts/AppContext";
+import axios from "axios";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children: React.ReactElement },
@@ -16,7 +25,7 @@ const Transition = React.forwardRef(function Transition(
 const EditPersonDialog: React.FC = () => {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error('AppContext must be used within an AppProvider');
+    throw new Error("AppContext must be used within an AppProvider");
   }
 
   const {
@@ -32,7 +41,7 @@ const EditPersonDialog: React.FC = () => {
     statusError,
     setStatusError,
     openError,
-    message
+    message,
   } = context;
 
   const handleClose = () => {
@@ -42,16 +51,19 @@ const EditPersonDialog: React.FC = () => {
 
   const handleSubmit = (updatedPatient: any) => {
     if (patientId) {
-      axios.put(`http://localhost:4000/api/patients/${patientId}`, updatedPatient)
+      axios
+        .put(`http://localhost:4000/api/patients/${patientId}`, updatedPatient)
         .then(() => {
-          setMessage('Patient updated successfully.');
+          setMessage("Patient updated successfully.");
           loadPatients();
           setOpenSuccess(true);
           setOpen(false);
         })
         .catch(() => {
           setOpenError(true);
-          setMessage('There was an error updating the patient. Please try again.');
+          setMessage(
+            "There was an error updating the patient. Please try again."
+          );
         });
     }
 
@@ -65,7 +77,7 @@ const EditPersonDialog: React.FC = () => {
       onClose={handleClose}
       TransitionComponent={Transition}
     >
-      <AppBar sx={{ position: 'relative', backgroundColor: '#DE7D41' }}>
+      <AppBar sx={{ position: "relative", backgroundColor: "#DE7D41" }}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -80,10 +92,10 @@ const EditPersonDialog: React.FC = () => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="md" sx={{ marginTop: '2%' }}>
+      <Container maxWidth="md" sx={{ marginTop: "2%" }}>
         {statusError && (
           <Alert
-            sx={{ margin: 'auto', marginBottom: 1, width: 'fit-content' }}
+            sx={{ margin: "auto", marginBottom: 1, width: "fit-content" }}
             severity="error"
             action={
               <IconButton
@@ -91,7 +103,7 @@ const EditPersonDialog: React.FC = () => {
                 color="inherit"
                 size="small"
                 onClick={() => {
-                  setStatusError('');
+                  setStatusError("");
                 }}
               >
                 <CloseIcon fontSize="inherit" />
@@ -101,9 +113,9 @@ const EditPersonDialog: React.FC = () => {
             {statusError}
           </Alert>
         )}
-         {openError && (
+        {openError && (
           <Alert
-            sx={{ margin: 'auto', marginBottom: 1, width: 'fit-content' }}
+            sx={{ margin: "auto", marginBottom: 1, width: "fit-content" }}
             severity="error"
             action={
               <IconButton
@@ -111,7 +123,7 @@ const EditPersonDialog: React.FC = () => {
                 color="inherit"
                 size="small"
                 onClick={() => {
-                  setStatusError('');
+                  setStatusError("");
                 }}
               >
                 <CloseIcon fontSize="inherit" />

@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   frontend:
@@ -33,7 +33,7 @@ services:
       POSTGRES_DB: mydb
     volumes:
       - pgdata:/var/lib/postgresql/data
-      - ./init-db:/docker-entrypoint-initdb.d 
+      - ./init-db:/docker-entrypoint-initdb.d
 
 volumes:
   pgdata:

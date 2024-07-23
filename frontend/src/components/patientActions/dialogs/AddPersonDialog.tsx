@@ -1,10 +1,19 @@
-import React, { useContext } from 'react';
-import { Dialog, AppBar, Toolbar, IconButton, Typography, Slide, Container, Alert } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import { TransitionProps } from '@mui/material/transitions';
-import AddPersonForm from '../forms/AddPersonForm';
-import { AppContext } from '../../../lib/contexts/AppContext';
-import axios from 'axios';
+import React, { useContext } from "react";
+import {
+  Dialog,
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  Slide,
+  Container,
+  Alert,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { TransitionProps } from "@mui/material/transitions";
+import AddPersonForm from "../forms/AddPersonForm";
+import { AppContext } from "../../../lib/contexts/AppContext";
+import axios from "axios";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children: React.ReactElement },
@@ -16,7 +25,7 @@ const Transition = React.forwardRef(function Transition(
 const AddPersonDialog: React.FC = () => {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error('AppContext must be used within an AppProvider');
+    throw new Error("AppContext must be used within an AppProvider");
   }
 
   const {
@@ -30,7 +39,7 @@ const AddPersonDialog: React.FC = () => {
     statusError,
     setStatusError,
     openError,
-    message
+    message,
   } = context;
 
   const handleClose = () => {
@@ -38,16 +47,17 @@ const AddPersonDialog: React.FC = () => {
   };
 
   const handleSubmit = (newPatient: any) => {
-    axios.post('http://localhost:4000/api/patients', newPatient)
+    axios
+      .post("http://localhost:4000/api/patients", newPatient)
       .then(() => {
         loadPatients();
         setOpenSuccess(true);
-        setMessage('Patient added successfully.');
+        setMessage("Patient added successfully.");
         setOpen(false);
       })
       .catch(() => {
         setOpenError(true);
-        setMessage('There was an error adding the patient. Please try again.');
+        setMessage("There was an error adding the patient. Please try again.");
       });
   };
 
@@ -58,7 +68,7 @@ const AddPersonDialog: React.FC = () => {
       onClose={handleClose}
       TransitionComponent={Transition}
     >
-      <AppBar sx={{ position: 'relative', backgroundColor: '#DE7D41' }}>
+      <AppBar sx={{ position: "relative", backgroundColor: "#DE7D41" }}>
         <Toolbar>
           <IconButton
             edge="start"
@@ -73,10 +83,10 @@ const AddPersonDialog: React.FC = () => {
           </Typography>
         </Toolbar>
       </AppBar>
-      <Container maxWidth="md" sx={{ marginTop: '2%' }}>
+      <Container maxWidth="md" sx={{ marginTop: "2%" }}>
         {statusError && (
           <Alert
-            sx={{ margin: 'auto', marginBottom: 1, width: 'fit-content' }}
+            sx={{ margin: "auto", marginBottom: 1, width: "fit-content" }}
             severity="error"
             action={
               <IconButton
@@ -84,7 +94,7 @@ const AddPersonDialog: React.FC = () => {
                 color="inherit"
                 size="small"
                 onClick={() => {
-                  setStatusError('');
+                  setStatusError("");
                 }}
               >
                 <CloseIcon fontSize="inherit" />
@@ -96,7 +106,7 @@ const AddPersonDialog: React.FC = () => {
         )}
         {openError && (
           <Alert
-            sx={{ margin: 'auto', marginBottom: 1, width: 'fit-content' }}
+            sx={{ margin: "auto", marginBottom: 1, width: "fit-content" }}
             severity="error"
             action={
               <IconButton
@@ -104,7 +114,7 @@ const AddPersonDialog: React.FC = () => {
                 color="inherit"
                 size="small"
                 onClick={() => {
-                  setStatusError('');
+                  setStatusError("");
                 }}
               >
                 <CloseIcon fontSize="inherit" />
@@ -114,10 +124,7 @@ const AddPersonDialog: React.FC = () => {
             {message}
           </Alert>
         )}
-        <AddPersonForm
-          statuses={statuses}
-          onSubmit={handleSubmit}
-        />
+        <AddPersonForm statuses={statuses} onSubmit={handleSubmit} />
       </Container>
     </Dialog>
   );

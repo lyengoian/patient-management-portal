@@ -1,7 +1,7 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
-import { getAuth, onAuthStateChanged, signOut, User } from 'firebase/auth';
-import axios from 'axios';
-import { Patient, Status } from '../types/types';
+import React, { createContext, useState, useEffect, ReactNode } from "react";
+import { getAuth, onAuthStateChanged, signOut, User } from "firebase/auth";
+import axios from "axios";
+import { Patient, Status } from "../types/types";
 
 interface AppContextProps {
   selectedIndex: number | null;
@@ -44,12 +44,14 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [patients, setPatients] = useState<Patient[]>([]);
-  const [selectedPatientId, setSelectedPatientId] = useState<number | null>(null);
+  const [selectedPatientId, setSelectedPatientId] = useState<number | null>(
+    null
+  );
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openError, setOpenError] = useState(false);
   const [message, setMessage] = useState<string | null>(null);
   const [statuses, setStatuses] = useState<Status[]>([]);
-  const [statusError, setStatusError] = useState('');
+  const [statusError, setStatusError] = useState("");
   const [user, setUser] = useState<User | null>(null);
 
   useEffect(() => {
@@ -80,19 +82,23 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   }, []);
 
   const loadPatients = () => {
-    axios.get('http://localhost:4000/api/patients')
-      .then(response => setPatients(response.data))
+    axios
+      .get("http://localhost:4000/api/patients")
+      .then((response) => setPatients(response.data))
       .catch(() => {
-        setMessage('There was an error fetching the patients. Please try again.');
+        setMessage(
+          "There was an error fetching the patients. Please try again."
+        );
         setOpenError(true);
       });
   };
 
   const fetchStatuses = () => {
-    axios.get('http://localhost:4000/api/statuses')
-      .then(response => setStatuses(response.data))
+    axios
+      .get("http://localhost:4000/api/statuses")
+      .then((response) => setStatuses(response.data))
       .catch(() => {
-        setStatusError('There was an error fetching the statuses.');
+        setStatusError("There was an error fetching the statuses.");
       });
   };
 
@@ -100,29 +106,46 @@ const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const auth = getAuth();
     signOut(auth)
       .then(() => setUser(null))
-      .catch(error => {
+      .catch((error) => {
         setOpenError(true);
-        console.error('Error signing out:', error);
+        console.error("Error signing out:", error);
       });
   };
 
   return (
-    <AppContext.Provider value={{
-      selectedIndex, setSelectedIndex,
-      dialogOpen, setDialogOpen,
-      infoCardOpen, setInfoCardOpen,
-      addDialogOpen, setAddDialogOpen,
-      deleteDialogOpen, setDeleteDialogOpen,
-      patients, setPatients,
-      selectedPatientId, setSelectedPatientId,
-      openSuccess, setOpenSuccess,
-      openError, setOpenError,
-      message, setMessage,
-      statuses, setStatuses,
-      statusError, setStatusError,
-      user, setUser,
-      loadPatients, fetchStatuses, handleLogout
-    }}>
+    <AppContext.Provider
+      value={{
+        selectedIndex,
+        setSelectedIndex,
+        dialogOpen,
+        setDialogOpen,
+        infoCardOpen,
+        setInfoCardOpen,
+        addDialogOpen,
+        setAddDialogOpen,
+        deleteDialogOpen,
+        setDeleteDialogOpen,
+        patients,
+        setPatients,
+        selectedPatientId,
+        setSelectedPatientId,
+        openSuccess,
+        setOpenSuccess,
+        openError,
+        setOpenError,
+        message,
+        setMessage,
+        statuses,
+        setStatuses,
+        statusError,
+        setStatusError,
+        user,
+        setUser,
+        loadPatients,
+        fetchStatuses,
+        handleLogout,
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

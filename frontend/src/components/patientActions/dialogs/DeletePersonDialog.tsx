@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext } from "react";
 import {
   Button,
   Dialog,
@@ -7,10 +7,10 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
-} from '@mui/material';
-import axios from 'axios';
-import { TransitionProps } from '@mui/material/transitions';
-import { AppContext } from '../../../lib/contexts/AppContext';
+} from "@mui/material";
+import axios from "axios";
+import { TransitionProps } from "@mui/material/transitions";
+import { AppContext } from "../../../lib/contexts/AppContext";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & { children: React.ReactElement },
@@ -22,7 +22,7 @@ const Transition = React.forwardRef(function Transition(
 const DeletePersonDialog: React.FC = () => {
   const context = useContext(AppContext);
   if (!context) {
-    throw new Error('AppContext must be used within an AppProvider');
+    throw new Error("AppContext must be used within an AppProvider");
   }
 
   const {
@@ -42,16 +42,19 @@ const DeletePersonDialog: React.FC = () => {
   };
 
   const handleDelete = () => {
-    axios.delete(`http://localhost:4000/api/patients/${patientId}`)
+    axios
+      .delete(`http://localhost:4000/api/patients/${patientId}`)
       .then(() => {
-        setMessage('Patient deleted successfully.');
+        setMessage("Patient deleted successfully.");
         loadPatients();
         setOpenSuccess(true);
         handleClose();
       })
       .catch(() => {
         setOpenError(true);
-        setMessage('There was an error deleting the patient. Please try again.');
+        setMessage(
+          "There was an error deleting the patient. Please try again."
+        );
         handleClose();
       });
   };
@@ -64,7 +67,7 @@ const DeletePersonDialog: React.FC = () => {
       onClose={handleClose}
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle color='#913F3D'>{"Delete Patient?"}</DialogTitle>
+      <DialogTitle color="#913F3D">{"Delete Patient?"}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-description">
           This action will permanently remove the patient from your dashboard.
@@ -72,7 +75,13 @@ const DeletePersonDialog: React.FC = () => {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button variant="contained" sx={{ background: '#913F3D' }} onClick={handleDelete}>Yes, Delete</Button>
+        <Button
+          variant="contained"
+          sx={{ background: "#913F3D" }}
+          onClick={handleDelete}
+        >
+          Yes, Delete
+        </Button>
       </DialogActions>
     </Dialog>
   );

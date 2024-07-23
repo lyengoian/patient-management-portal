@@ -1,14 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, User } from 'firebase/auth';
-import PasswordResetForm from './PasswordResetForm';
-import { Button, TextField, Typography, Box, Alert, IconButton } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import FinniHealthLogo from '../../lib/assets/logo.svg';
-import { auth } from '../../firebaseConfig';
+import React, { useState, useEffect } from "react";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  User,
+} from "firebase/auth";
+import PasswordResetForm from "./PasswordResetForm";
+import {
+  Button,
+  TextField,
+  Typography,
+  Box,
+  Alert,
+  IconButton,
+} from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import FinniHealthLogo from "../../lib/assets/logo.svg";
+import { auth } from "../../firebaseConfig";
 
 const LoginForm: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isSignUp, setIsSignUp] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showAlert, setShowAlert] = useState(false);
@@ -17,20 +29,22 @@ const LoginForm: React.FC = () => {
 
   const handleFirebaseError = (error: any) => {
     switch (error.code) {
-      case 'auth/too-many-requests':
-        setError('Your account has been temporarily disabled. Please reset your password or try again later.');
+      case "auth/too-many-requests":
+        setError(
+          "Your account has been temporarily disabled. Please reset your password or try again later."
+        );
         break;
-      case 'auth/invalid-credential':
-        setError('Invalid credentials.');
+      case "auth/invalid-credential":
+        setError("Invalid credentials.");
         break;
-      case 'auth/email-already-in-use':
-        setError('User already exists. Please sign in.');
+      case "auth/email-already-in-use":
+        setError("User already exists. Please sign in.");
         break;
-      case 'auth/weak-password':
-        setError('Password too weak - must be at least 6 characters.');
+      case "auth/weak-password":
+        setError("Password too weak - must be at least 6 characters.");
         break;
       default:
-        setError('Sorry, there was a problem. Please try again.');
+        setError("Sorry, there was a problem. Please try again.");
         break;
     }
   };
@@ -73,38 +87,55 @@ const LoginForm: React.FC = () => {
   };
 
   if (isResettingPassword) {
-    return <PasswordResetForm setIsResettingPassword={setIsResettingPassword} />;
+    return (
+      <PasswordResetForm setIsResettingPassword={setIsResettingPassword} />
+    );
   }
 
   return (
-    <Box sx={{
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '100vh',
-      backgroundColor: '#F0EADF',
-      padding: '2rem'
-    }}>
-      <Box sx={{ marginBottom: '30px' }}><img src={FinniHealthLogo} alt="Finni Health Logo" /></Box>
-      {showAlert && <Alert sx={{ marginBottom: 1, width: 'fit-content' }} severity="error" action={
-        <IconButton
-          aria-label="close"
-          color="inherit"
-          size="small"
-          onClick={() => {
-            setShowAlert(false);
-          }}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+        backgroundColor: "#F0EADF",
+        padding: "2rem",
+      }}
+    >
+      <Box sx={{ marginBottom: "30px" }}>
+        <img src={FinniHealthLogo} alt="Finni Health Logo" />
+      </Box>
+      {showAlert && (
+        <Alert
+          sx={{ marginBottom: 1, width: "fit-content" }}
+          severity="error"
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setShowAlert(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
         >
-          <CloseIcon fontSize="inherit" />
-        </IconButton>
-      }>{error}</Alert>}
+          {error}
+        </Alert>
+      )}
 
-      <Typography variant='h5' sx={{ marginBottom: '1rem' }}>
-        {isSignUp ? 'Sign Up' : 'Sign In'}
+      <Typography variant="h5" sx={{ marginBottom: "1rem" }}>
+        {isSignUp ? "Sign Up" : "Sign In"}
       </Typography>
-      <form onSubmit={handleFormSubmit} style={{ width: '100%', maxWidth: '400px' }}>
-        <Box sx={{ marginBottom: '1rem' }}>
+      <form
+        onSubmit={handleFormSubmit}
+        style={{ width: "100%", maxWidth: "400px" }}
+      >
+        <Box sx={{ marginBottom: "1rem" }}>
           <TextField
             fullWidth
             label="Email"
@@ -112,7 +143,7 @@ const LoginForm: React.FC = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            sx={{ marginBottom: '1rem' }}
+            sx={{ marginBottom: "1rem" }}
           />
           <TextField
             fullWidth
@@ -124,27 +155,30 @@ const LoginForm: React.FC = () => {
           />
         </Box>
         <Button
-          variant='contained'
+          variant="contained"
           color="primary"
           type="submit"
           fullWidth
-          sx={{ marginBottom: '1rem' }}
+          sx={{ marginBottom: "1rem" }}
         >
-          {isSignUp ? 'Sign Up' : 'Sign In'}
+          {isSignUp ? "Sign Up" : "Sign In"}
         </Button>
       </form>
-      <Button onClick={() => setIsResettingPassword(true)} sx={{ marginBottom: '1rem' }}>
+      <Button
+        onClick={() => setIsResettingPassword(true)}
+        sx={{ marginBottom: "1rem" }}
+      >
         Forgot Password?
       </Button>
-      <Typography variant='body1' sx={{ marginBottom: '0.5rem' }}>
-        {isSignUp ? 'First time using the portal?' : 'Already have an account?'}
+      <Typography variant="body1" sx={{ marginBottom: "0.5rem" }}>
+        {isSignUp ? "First time using the portal?" : "Already have an account?"}
       </Typography>
       <Button
-        variant='contained'
+        variant="contained"
         color="secondary"
         onClick={() => setIsSignUp(!isSignUp)}
       >
-        {isSignUp ? 'Sign In' : 'Sign Up'}
+        {isSignUp ? "Sign In" : "Sign Up"}
       </Button>
     </Box>
   );
