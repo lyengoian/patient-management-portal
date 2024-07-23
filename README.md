@@ -53,7 +53,7 @@ This project is a simple web application build with a React Frontend with Materi
 4. From the patient management portal, simply click on the <> icon. A drawer will open, and a form will be presented to enter details about the new patient. Fill out all of the required information, then submit. Once the form is submitted, the drawer will close and the new patient will appear in the portal.
     **NOTE** that the user will need to fill out all required information for the form to submit. Additional fields and addresses can be added and removed as needed. At least one address is required for each patient.
 #### Empty Add Patient Form
-<img width="1501" alt="image" src="https://github.com/user-attachments/assets/1edb0f6f-4e99-4493-abc9-157ab72543de">
+<img width="1508" alt="image" src="https://github.com/user-attachments/assets/779ec6a2-5ca2-465b-bef9-b1beb4696c8d">
 
 #### Successful Creation of New Patient
 <img width="1501" alt="image" src="https://github.com/user-attachments/assets/b52c097e-4695-439e-9cdb-367ba4f83aba">
@@ -62,7 +62,7 @@ This project is a simple web application build with a React Frontend with Materi
 5. From the patient management portal, simply click on the <> icon. A drawer will open, and a form will be presented to enter updated information about the existing patient. All form fields will be pre-filled with any existing information. Fill out all of the required information as needed, then submit. Once the form is submitted, the drawer will close and the updated patient will appear in the portal.
     **NOTE** that the user will need to fill out all required information for the form to submit. Any fields that were not updated will be submitted as-is. Additional fields and addresses can be added and removed as needed. At least one address is required for each patient.
 #### Edit Patient Form with Pre-Filled Information
-<img width="1501" alt="image" src="https://github.com/user-attachments/assets/99cba95e-5419-41bf-b097-7795af6d5e1b">
+<img width="1508" alt="image" src="https://github.com/user-attachments/assets/040aa35e-9db5-4614-9894-16e66a3e9699">
 
 #### Successful Update of Patient
 <img width="1501" alt="image" src="https://github.com/user-attachments/assets/85073633-d3e6-4597-8cc2-9a932723159e">
