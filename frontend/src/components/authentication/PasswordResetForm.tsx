@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { PasswordResetFormProps } from "../../lib/types/types";
 import CloseIcon from "@mui/icons-material/Close";
-import FinniHealthLogo from "../../lib/assets/logo.svg";
 
 const PasswordResetForm: React.FC<PasswordResetFormProps> = ({
   setIsResettingPassword,
@@ -51,9 +50,6 @@ const PasswordResetForm: React.FC<PasswordResetFormProps> = ({
         padding: "2rem",
       }}
     >
-      <Box sx={{ marginBottom: "30px" }}>
-        <img src={FinniHealthLogo} alt="Finni Health Logo" />
-      </Box>
       {showAlert && error && (
         <Alert
           sx={{ marginBottom: 1, width: "fit-content" }}

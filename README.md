@@ -113,7 +113,7 @@ This project is a web application built with a React Frontend with Material UI c
 Start by cloning the repository to your local machine. Open your Terminal and run the following command:
 
 ```
-git clone https://github.com/lyengoian/finni-health
+git clone https://github.com/lyengoian/patient-management-portal
 ```
 
 The best way to run this project is by building the docker container. Before running the application, ensure Docker Desktop is installed and running on your machine. 
@@ -130,7 +130,7 @@ Once Docker compose finishes running, you will see the following in the console:
 ```
 frontend-1  | Compiled successfully!
 frontend-1  | 
-frontend-1  | You can now view finni-health in the browser.
+frontend-1  | You can now view patient-management-portal in the browser.
 frontend-1  | 
 frontend-1  |   Local:            http://localhost:3000
 frontend-1  |   On Your Network:  http://<your-machine-ip>:3000

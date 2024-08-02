@@ -6,7 +6,6 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
-import FinniHealthLogo from "../../lib/assets/logowhite.svg";
 import { Box } from "@mui/material";
 import { AppContext } from "../../lib/contexts/AppContext";
 
@@ -35,11 +34,6 @@ const PatientAppBar: React.FC = () => {
         >
           <MenuIcon />
         </IconButton>
-        <img
-          style={{ marginRight: "20px" }}
-          src={FinniHealthLogo}
-          alt="Finni Health Logo"
-        />
         <Typography
           variant="h6"
           component="div"

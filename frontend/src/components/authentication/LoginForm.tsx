@@ -15,7 +15,6 @@ import {
   IconButton,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import FinniHealthLogo from "../../lib/assets/logo.svg";
 import { auth } from "../../firebaseConfig";
 import { AppContext } from "../../lib/contexts/AppContext";
 
@@ -117,9 +116,6 @@ const LoginForm: React.FC = () => {
         padding: "2rem",
       }}
     >
-      <Box sx={{ marginBottom: "30px" }}>
-        <img src={FinniHealthLogo} alt="Finni Health Logo" />
-      </Box>
       {showAlert && (
         <Alert
           sx={{ marginBottom: 1, width: "fit-content" }}
